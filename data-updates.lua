@@ -67,7 +67,7 @@ data.raw.roboport["aai-signal-receiver"].base_animation = {
 			height = 155,
 			frame_count = 1,
 			line_length = 1,
-			shift = util.by_pixel(190, -10),
+			shift = util.by_pixel(187, -12),
 			scale = 0.5,
 			animation_speed = 1,
 		},

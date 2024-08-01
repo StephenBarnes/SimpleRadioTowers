@@ -1,6 +1,6 @@
 {
 	"name": "SimpleRadioTowers",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"title": "Simple Radio Towers",
 	"author": "StephenB",
 	"factorio_version": "1.1",
@@ -9,5 +9,5 @@
 		"aai-signal-transmission >= 0.1.0",
 		"? IndustrialRevolution3 >= 3.0.0"
 	],
-	"description": "Transmit signals over unlimited distances. Re-skins and tweaks AAI Signal Transmission."
+	"description": "Transmit signals over unlimited distances, instead of running wires between outposts. Available cheap and early-game. Re-skin of AAI Signal Transmission plus tweaks."
 }
