@@ -1,4 +1,35 @@
 ------------------------------------------------------------------------
+-- Read settings to get size factors.
+
+local function getSizeFactor(sizeString)
+	if sizeString == "3x3" then
+		return 1
+	elseif sizeString == "2x2" then
+		return 0.667
+	elseif sizeString == "1x1" then
+		return 0.333
+	else
+		error("Invalid size string: " .. sizeString)
+	end
+end
+
+local transmitterSizeString = settings.startup["SimpleRadioTowers-transmitter-size"].value
+local receiverSizeString = settings.startup["SimpleRadioTowers-receiver-size"].value
+
+local transmitterSizeFactor = getSizeFactor(transmitterSizeString)
+local receiverSizeFactor = getSizeFactor(receiverSizeString)
+
+local function scaleBoundingBox(box, sizeFactor)
+	if sizeFactor == 1 then
+		return box
+	end
+	return {
+		{box[1][1] * sizeFactor, box[1][2] * sizeFactor},
+		{box[2][1] * sizeFactor, box[2][2] * sizeFactor},
+	}
+end
+
+------------------------------------------------------------------------
 -- Change images and shadows for the receiver and transmitter entities.
 -- Also change collision boxes and wire connection points to match the new sprites.
 
@@ -16,8 +47,8 @@ data.raw.roboport["aai-signal-sender"].base_animation = {
 			height = 753,
 			frame_count = 1,
 			line_length = 1,
-			shift = util.by_pixel(12, -134),
-			scale = 0.5,
+			shift = util.by_pixel(12 * transmitterSizeFactor, -134 * transmitterSizeFactor),
+			scale = 0.5 * transmitterSizeFactor,
 			animation_speed = 1,
 		},
 		{
@@ -28,18 +59,18 @@ data.raw.roboport["aai-signal-sender"].base_animation = {
 			height = 240,
 			frame_count = 1,
 			line_length = 1,
-			shift = util.by_pixel(197, 19),
-			scale = 0.5,
+			shift = util.by_pixel(197 * transmitterSizeFactor, 19 * transmitterSizeFactor),
+			scale = 0.5 * transmitterSizeFactor,
 			animation_speed = 1,
 		},
 	},
 }
-data.raw.roboport["aai-signal-sender"].collision_box = {{-1.5, -1.3}, {1.5, 1.3}}
-data.raw.roboport["aai-signal-sender"].selection_box = {{-1.5, -1.5}, {1.5, 1.5}}
-data.raw.roboport["aai-signal-sender"].drawing_box = {{-2, -9}, {7, 1.5}}
+data.raw.roboport["aai-signal-sender"].collision_box = scaleBoundingBox({{-1.5, -1.3}, {1.5, 1.3}}, transmitterSizeFactor)
+data.raw.roboport["aai-signal-sender"].selection_box = scaleBoundingBox({{-1.5, -1.5}, {1.5, 1.5}}, transmitterSizeFactor)
+data.raw.roboport["aai-signal-sender"].drawing_box = scaleBoundingBox({{-2, -9}, {7, 1.5}}, transmitterSizeFactor)
 local wirePos = {
-	red = { 1.2, -0.7 },
-	green = { -0.2, 0.6 },
+	red = { 1.2 * transmitterSizeFactor, -0.7 * transmitterSizeFactor },
+	green = { -0.2 * transmitterSizeFactor, 0.6 * transmitterSizeFactor },
 }
 data.raw.roboport["aai-signal-sender"].circuit_wire_connection_point = {
 	wire = wirePos,
@@ -55,8 +86,8 @@ data.raw.roboport["aai-signal-receiver"].base_animation = {
 			height = 711,
 			frame_count = 1,
 			line_length = 1,
-			shift = util.by_pixel(-2, -121),
-			scale = 0.5,
+			shift = util.by_pixel(-2 * receiverSizeFactor, -121 * receiverSizeFactor),
+			scale = 0.5 * receiverSizeFactor,
 			animation_speed = 1,
 		},
 		{
@@ -67,18 +98,18 @@ data.raw.roboport["aai-signal-receiver"].base_animation = {
 			height = 155,
 			frame_count = 1,
 			line_length = 1,
-			shift = util.by_pixel(187, -12),
-			scale = 0.5,
+			shift = util.by_pixel(180 * receiverSizeFactor, -12 * receiverSizeFactor),
+			scale = 0.5 * receiverSizeFactor,
 			animation_speed = 1,
 		},
 	},
 }
-data.raw.roboport["aai-signal-receiver"].collision_box = {{-1.5, -1.3}, {1.5, 1.3}}
-data.raw.roboport["aai-signal-receiver"].selection_box = {{-1.5, -1.5}, {1.5, 1.5}}
-data.raw.roboport["aai-signal-receiver"].drawing_box = {{-2, -9}, {7, 1.5}}
+data.raw.roboport["aai-signal-receiver"].collision_box = scaleBoundingBox({{-1.5, -1.3}, {1.5, 1.3}}, receiverSizeFactor)
+data.raw.roboport["aai-signal-receiver"].selection_box = scaleBoundingBox({{-1.5, -1.5}, {1.5, 1.5}}, receiverSizeFactor)
+data.raw.roboport["aai-signal-receiver"].drawing_box = scaleBoundingBox({{-2, -9}, {7, 1.5}}, receiverSizeFactor)
 local receiverWirePos = {
-	red = { -0.6, -0.2 },
-	green = { 0.7, 0 },
+	red = { -0.6 * receiverSizeFactor, -0.2 * receiverSizeFactor },
+	green = { 0.7 * receiverSizeFactor, 0 * receiverSizeFactor },
 }
 data.raw.roboport["aai-signal-receiver"].circuit_wire_connection_point = {
 	wire = receiverWirePos,
