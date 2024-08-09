@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 09. 08. 2024
+  Features:
+    - TODO added setting to change transmitter and receiver sizes between 3x3 (default) and 2x2.
+  Changes:
+    - Partially fixed transmitter sprite artifacts created by upscaling; please do not look too closely at it.
+    - Increased brightness and contrast of sprite for the Radio tech.
+    - Increased brightness of sprites for items/recipes.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.1
 Date: 01. 08. 2024
   Bugfixes:
